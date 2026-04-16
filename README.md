@@ -4,9 +4,10 @@
 
 Built as a product concept
 
-![Clean run screenshot](public/readme/clean-run.png)
-
-![Flagged run screenshot](public/readme/flagged-run.png)
+<p align="center">
+  <img src="public/readme/clean-run.png" alt="Clean run screenshot" width="48%" />
+  <img src="public/readme/flagged-run.png" alt="Flagged run screenshot" width="48%" />
+</p>
 
 
 ---
