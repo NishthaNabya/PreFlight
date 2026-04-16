@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CheckCircle, AlertTriangle } from "lucide-react"
 
 interface TrustSignalProps {
@@ -8,17 +8,16 @@ interface TrustSignalProps {
 }
 
 export function TrustSignal({ flagged }: TrustSignalProps) {
-  const scoreRef = useRef<HTMLSpanElement>(null)
+  const [displayScore, setDisplayScore] = useState(flagged ? 62.1 : 98.4)
+  const [displayPay, setDisplayPay] = useState(312847.23)
   const targetScore = flagged ? 62.1 : 98.4
+  const targetPay = 312847.23
   const prevTarget = useRef<number>(targetScore)
 
   useEffect(() => {
-    const el = scoreRef.current
-    if (!el) return
-
     const from = prevTarget.current === targetScore ? 0 : prevTarget.current
     const to = targetScore
-    const duration = 600
+    const duration = 700
     const start = performance.now()
 
     function tick(now: number) {
@@ -27,7 +26,9 @@ export function TrustSignal({ flagged }: TrustSignalProps) {
       // ease-out cubic
       const eased = 1 - Math.pow(1 - progress, 3)
       const current = from + (to - from) * eased
-      if (el) el.textContent = current.toFixed(1) + "%"
+      setDisplayScore(current)
+      const payAmount = targetPay * eased
+      setDisplayPay(payAmount)
       if (progress < 1) requestAnimationFrame(tick)
     }
 
@@ -39,14 +40,10 @@ export function TrustSignal({ flagged }: TrustSignalProps) {
     <div className="bg-white border border-[#E8E8E3] rounded-xl p-10 text-center"
       style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.04)" }}>
       {/* Score */}
-      <span
-        ref={scoreRef}
-        className={`text-6xl font-bold tracking-tighter tabular-nums font-mono ${
-          flagged ? "text-amber-600" : "text-emerald-600"
-        }`}
-      >
-        {flagged ? "62.1%" : "98.4%"}
-      </span>
+      <div className="text-6xl font-bold tracking-tighter tabular-nums font-mono"
+        style={{ color: flagged ? "#B45309" : "#059669" }}>
+        {displayScore.toFixed(1)}<span style={{ fontSize: "0.95em" }}>%</span>
+      </div>
 
       {/* Status row */}
       <div className="mt-2 flex items-center justify-center gap-1.5">
@@ -75,18 +72,20 @@ export function TrustSignal({ flagged }: TrustSignalProps) {
         <span className="font-mono text-gray-400">#2847</span>
       </div>
 
-      {/* Stats */}
-      <div className="mt-4 grid grid-cols-3 gap-3">
-        <div className="bg-gray-50 rounded-lg px-4 py-3 text-center">
-          <div className="text-lg font-semibold text-gray-900">47</div>
+      {/* Stats - single flex row with dividers */}
+      <div className="mt-6 flex items-center justify-center">
+        <div className="flex-1 text-center">
+          <div className="text-lg font-semibold text-gray-900 tabular-nums tracking-normal">47</div>
           <div className="text-xs text-gray-500 uppercase tracking-wide mt-0.5">Employees</div>
         </div>
-        <div className="bg-gray-50 rounded-lg px-4 py-3 text-center">
-          <div className="text-lg font-semibold text-gray-900 font-mono">$312,847</div>
+        <div className="border-l border-gray-200 flex-1 text-center pl-6">
+          <div className="text-lg font-semibold text-gray-900 font-mono tabular-nums tracking-normal">
+            ${displayPay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </div>
           <div className="text-xs text-gray-500 uppercase tracking-wide mt-0.5">Gross pay</div>
         </div>
-        <div className="bg-gray-50 rounded-lg px-4 py-3 text-center">
-          <div className="text-lg font-semibold text-gray-900">12</div>
+        <div className="border-l border-gray-200 flex-1 text-center pl-6">
+          <div className="text-lg font-semibold text-gray-900 tabular-nums tracking-normal">12</div>
           <div className="text-xs text-gray-500 uppercase tracking-wide mt-0.5">States</div>
         </div>
       </div>

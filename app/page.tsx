@@ -27,7 +27,7 @@ export default function PreflightPage() {
       <TopBar flagged={flagged} onToggle={handleToggle} />
 
       <main
-        className="mx-auto max-w-[880px] px-6 py-8 pb-24 flex flex-col gap-5"
+        className="mx-auto max-w-[880px] px-6 py-8 pb-32 flex flex-col gap-5"
         style={{
           opacity: fading ? 0 : 1,
           transition: "opacity 150ms ease",

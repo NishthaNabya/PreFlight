@@ -59,10 +59,10 @@ export function Findings({ visible }: FindingsProps) {
           </div>
 
           <p className="mt-3 text-sm text-gray-700 leading-relaxed">
-            James was paid <span className="font-mono font-semibold">$16,200</span> this period. His usual pay is around{" "}
-            <span className="font-mono font-semibold">$4,800</span>. That&apos;s more than 3× his normal amount. This is
+            James was paid <span className="font-mono font-semibold tabular-nums tracking-normal">$12,400</span> this period. His usual pay is around{" "}
+            <span className="font-mono font-semibold tabular-nums tracking-normal">$4,800</span>. That&apos;s more than 2.5× his normal amount. This is
             almost certainly a data entry error — likely hours were entered as{" "}
-            <span className="font-mono">400</span> instead of <span className="font-mono">40</span>.
+            <span className="font-mono">100</span> instead of <span className="font-mono">40</span>.
           </p>
 
           <div className="mt-3 bg-white rounded-md px-3 py-2 border border-gray-200 flex items-start gap-2">
