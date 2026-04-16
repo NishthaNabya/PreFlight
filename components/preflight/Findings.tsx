@@ -1,13 +1,15 @@
 "use client"
 
 import { useRef, useEffect } from "react"
+import type { Finding } from "@/lib/types"
 
 interface FindingsProps {
-  visible: boolean
+  findings: Finding[]
 }
 
-export function Findings({ visible }: FindingsProps) {
+export function Findings({ findings }: FindingsProps) {
   const wrapperRef = useRef<HTMLDivElement>(null)
+  const visible = findings.length > 0
 
   useEffect(() => {
     const el = wrapperRef.current
@@ -27,6 +29,12 @@ export function Findings({ visible }: FindingsProps) {
     }
   }, [visible])
 
+  const criticalCount = findings.filter((f) => f.severity === "critical").length
+  const warningCount = findings.filter((f) => f.severity === "warning").length
+  const badgeParts: string[] = []
+  if (criticalCount > 0) badgeParts.push(`${criticalCount} critical`)
+  if (warningCount > 0) badgeParts.push(`${warningCount} warning`)
+
   return (
     <div
       ref={wrapperRef}
@@ -45,33 +53,43 @@ export function Findings({ visible }: FindingsProps) {
         <div className="flex items-center gap-2">
           <h2 className="text-base font-semibold text-gray-900">Findings</h2>
           <span className="bg-red-100 text-red-700 rounded-full px-2 py-0.5 text-xs font-semibold">
-            1 critical
+            {badgeParts.join(", ")}
           </span>
         </div>
 
-        {/* Finding card */}
-        <div className="mt-4 bg-red-50/40 rounded-lg p-4">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold bg-red-100 text-red-700">
-              Critical
-            </span>
-            <span className="text-sm font-medium text-gray-900">James Liu · Engineering</span>
-          </div>
+        {/* Finding cards */}
+        {findings.map((finding, i) => (
+          <div
+            key={`${finding.employeeId}-${i}`}
+            className="mt-4 bg-red-50/40 rounded-lg p-4"
+          >
+            <div className="flex items-center gap-2">
+              <span
+                className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ${
+                  finding.severity === "critical"
+                    ? "bg-red-100 text-red-700"
+                    : "bg-amber-100 text-amber-700"
+                }`}
+              >
+                {finding.severity === "critical" ? "Critical" : "Warning"}
+              </span>
+              <span className="text-sm font-medium text-gray-900">
+                {finding.employeeName} &middot; {finding.department}
+              </span>
+            </div>
 
-          <p className="mt-3 text-sm text-gray-700 leading-relaxed">
-            James was paid <span className="font-mono font-semibold tabular-nums tracking-normal">$12,400</span> this period. His usual pay is around{" "}
-            <span className="font-mono font-semibold tabular-nums tracking-normal">$4,800</span>. That&apos;s more than 2.5× his normal amount. This is
-            almost certainly a data entry error — likely hours were entered as{" "}
-            <span className="font-mono">100</span> instead of <span className="font-mono">40</span>.
-          </p>
-
-          <div className="mt-3 bg-white rounded-md px-3 py-2 border border-gray-200 flex items-start gap-2">
-            <span className="text-gray-400 text-sm shrink-0">→</span>
-            <p className="text-sm text-gray-600">
-              Verify hours with James&apos;s manager before approving this run
+            <p className="mt-3 text-sm text-gray-700 leading-relaxed">
+              {finding.description}
             </p>
+
+            <div className="mt-3 bg-white rounded-md px-3 py-2 border border-gray-200 flex items-start gap-2">
+              <span className="text-gray-400 text-sm shrink-0">&rarr;</span>
+              <p className="text-sm text-gray-600">
+                {finding.suggestedAction}
+              </p>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
     </div>
   )
