@@ -59,9 +59,9 @@ Each one is a pure function with no side effects. Input in, verdict out.
 
 **`lib/engine/scorer.ts`** takes all deltas and findings and computes a single confidence score. Critical findings subtract 35 points, warnings subtract 10, unexplained deltas subtract 5. Score above 80 = pass. Below = hold. It also generates a summary string describing what it found.
 
-## What's connected and what's not (being honest)
+## What's connected and what's not
 
-This is a product prototype built in 8 hours. Here's what's real and what's simulated:
+This is a product prototype built in under 2 hours from ideation to execution. Here's what's real and what's simulated:
 
 **Real (runs actual logic):**
 - The diff engine computes all employee changes from raw payroll data
@@ -126,7 +126,3 @@ In clean mode, everything checks out: 2 new hires, 1 termination, 1 raise, all a
 In flagged mode, James Liu's gross pay spikes 3.4×. Preflight catches it, explains it in plain English, and holds the batch. 62.1% confidence. Amber button.
 
 ---
-
-Built by **Nishtha** — [GitHub](https://github.com/your-handle) · [LinkedIn](https://linkedin.com/in/your-handle) · [X](https://x.com/your-handle)
-
-*Built in 8 hours as a product engineering demo. Would love to build this for real.*
