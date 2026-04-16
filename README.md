@@ -4,6 +4,11 @@
 
 Built as a product concept
 
+![Clean run screenshot](/Users/nishh/.cursor/projects/Users-nishh-Desktop-PreFlight/assets/Screenshot_2026-04-16_at_12.07.36_PM-2e938e7c-d056-44bd-b95e-c04d9ba3221b.png)
+
+![Flagged run screenshot](/Users/nishh/.cursor/projects/Users-nishh-Desktop-PreFlight/assets/Screenshot_2026-04-16_at_12.07.46_PM-19d6cc76-c7eb-419e-971a-dac3a3e04573.png)
+
+
 ---
 
 ## What is this?
